@@ -1,12 +1,25 @@
 //Jenkinsfile (Declarative Pipeline)
 pipeline {
-    agent {
-        docker { image 'secondarynamenode' }
-    }
+    agent any
     stages {
+        stage('Build') {
+            steps {
+                echo 'Building'
+            }
+        }
+	stage('Sanity check') {
+            steps {
+                input "Does the staging environment look ok?"
+            }
+        }
         stage('Test') {
             steps {
-                sh 'node --version'
+                echo 'Testing'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying'
             }
         }
     }
