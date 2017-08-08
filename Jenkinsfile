@@ -23,4 +23,8 @@ pipeline {
             }
         }
     }
-}
+    post{
+	always{
+		input "Press Accept to finish"
+		}
+	}
