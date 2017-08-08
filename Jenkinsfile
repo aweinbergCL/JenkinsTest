@@ -1,7 +1,7 @@
 //Jenkinsfile (Declarative Pipeline)
 pipeline {
     agent {
-        docker { image 'node:7-alpine' }
+        docker { image 'secondarynamenode' }
     }
     stages {
         stage('Test') {
