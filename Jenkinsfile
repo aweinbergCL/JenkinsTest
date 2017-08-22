@@ -1,5 +1,6 @@
 #!groovy
 
+def masterBuildPulseEndpoint = 'http://corelogic-project-monitor-production.cfapps.io/projects/REPLACETHIS/status'
 
 if (env.BRANCH_NAME == 'master') {
     properties([[$class  : 'BuildDiscarderProperty',
