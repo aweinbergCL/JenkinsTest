@@ -1,3 +1,6 @@
+
+
+
 buildscript {
     ext {
         springBootVersion = '1.5.4.RELEASE'
@@ -22,7 +25,8 @@ apply plugin: 'idea'
 
 apply plugin: 'org.springframework.boot'
 
-version = '1.0'
+group = 'com.corelogic'
+version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

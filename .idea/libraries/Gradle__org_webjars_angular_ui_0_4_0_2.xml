@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.webjars:angular-ui:0.4.0-2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.webjars/angular-ui/0.4.0-2/8deff747c57910574bfa757abce9e1873dc015ce/angular-ui-0.4.0-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.webjars/angular-ui/0.4.0-2/83c46a2f7012ec7ef02460aff6c6df91fbf45b4f/angular-ui-0.4.0-2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
