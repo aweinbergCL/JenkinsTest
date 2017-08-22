@@ -9,7 +9,7 @@
 // Please do not put "stage" that waits in a node scope since it
 // will occupy an executor during the entire wait period
 
-node('linux') {
+node {
 
     stage('Clean Workspace') {
         // Delete workspace
@@ -48,7 +48,7 @@ stage('Build Checkpoint') {
     }
 }
 
-node('linux') {
+node {
     stage 'Parallel Testing Steps'
     parallel(failFast: true,
             'js unit tests': {
