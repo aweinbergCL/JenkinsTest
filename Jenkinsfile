@@ -47,6 +47,28 @@ node {
     }
 }
 
+stage('Upload Artifacts') {
+    node {
+
+        def utils = fileLoader.fromGit('./utils.groovy', 'https://github.com/corelogic/cd-pipeline.git', 'wip-jobtemplate', '774aeeb5-4206-427f-bdb8-33f22bde0252', '')
+        def filename = 'ci-pipeline.zip'
+        def localdisplayName = env.BUILD_NUMBER + "-" + env.GITHASH.substring(0, 7)
+        def buildinfo = readJSON text: "{}"
+
+
+        buildinfo['sha'] = env.GITHASH
+        buildinfo['branch'] = env.BRANCH_NAME
+        buildinfo['repo'] = env.GITREPONAME
+        buildinfo['buildnumber'] = localdisplayName
+        buildinfo['buildurl'] = env.BUILD_URL
+        unstash 'artifacts'
+        writeJSON file: 'buildinfo.json', json: buildinfo
+        zip zipFile: filename
+        utils.UploadToNexus(filename,localdisplayName)
+    }
+}
+
+
 
 
 def setJavaHomeOnPath() {
