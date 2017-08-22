@@ -1,36 +1,44 @@
 #!groovy
 
-def masterBuildPulseEndpoint = 'http://corelogic-project-monitor-production.cfapps.io/projects/REPLACETHIS/status'
-
-if (env.BRANCH_NAME == 'master') {
-    properties([[$class  : 'BuildDiscarderProperty',
-                 strategy: [$class: 'LogRotator', artifactNumToKeepStr: '3', numToKeepStr: '3']],
-                [$class   : 'HudsonNotificationProperty',
-                 endpoints: [[event: 'all', format: 'JSON', loglines: 0, protocol: 'HTTP', timeout: 30000, url: masterBuildPulseEndpoint]]]])
-} else {
-    properties([[$class  : 'BuildDiscarderProperty',
-                 strategy: [$class: 'LogRotator', artifactNumToKeepStr: '3', numToKeepStr: '3']]])
-}
-
-// IMPORTANT NOTE:
-// Please do not put "stage" that waits in a node scope since it
-// will occupy an executor during the entire wait period
-
-node('linux') {
-
+pipeline {
+    agent none
     stages {
         stage('Build') {
+            agent any
             steps {
-                echo 'Building...'
-                sh 'npm install'
+                checkout scm
+                echo "building"
             }
         }
-        stage('Test') {
+        stage('Test on Linux') {
+            agent {
+                label 'linux'
+            }
             steps {
-                echo 'Testing...'
-                sh 'npm test'
+                unstash 'app'
+                echo "test on Linux"
+            }
+            post {
+                always {
+                    echo "unit test"
+
+                }
+            }
+        }
+        stage('Test on Windows') {
+            agent {
+                label 'windows'
+            }
+            steps {
+                unstash 'app'
+                echo "testing on windows"
+            }
+            post {
+                always {
+                    echo "unit test 2"
+
+                }
             }
         }
     }
-
 }
