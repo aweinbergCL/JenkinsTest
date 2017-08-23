@@ -114,7 +114,7 @@ if (project.hasProperty('nexusUrl') &&
 //                repository(url: "${nexusUrl}/content/repositories/idap") {
 //                    authentication(userName: nexusUsername, password: nexusPassword)
 //                }
-                snapshotRepository(url: "${nexusUrl}/content/repositories/idap") {
+                snapshotRepository(url: "${nexusUrl}/content/repositories/idap/") {
                     authentication(userName: nexusUsername, password: nexusPassword)
                 }
                 pom.name = project.ext.artifactBaseName
