@@ -87,28 +87,48 @@ stage('Test Checkpoint') {
 
 
 
+node {
+    unstash 'everything'
 
+    stage 'Snapshot'
 
-stage('Upload Artifacts') {
-    node {
-
-        def utils = fileLoader.fromGit('./utils.groovy', 'https://github.com/corelogic/cd-pipeline.git', 'master', '774aeeb5-4206-427f-bdb8-33f22bde0252', '')
-        def filename = 'jenkins-test-pipeline.zip'
-        def localdisplayName = env.BUILD_NUMBER + "-" + env.GITHASH.substring(0, 7)
-        def buildinfo = readJSON text: "{}"
-
-
-        buildinfo['sha'] = env.GITHASH
-        buildinfo['branch'] = env.BRANCH_NAME
-        buildinfo['repo'] = env.GITREPONAME
-        buildinfo['buildnumber'] = localdisplayName
-        buildinfo['buildurl'] = env.BUILD_URL
-        unstash 'artifacts'
-        writeJSON file: 'buildinfo.json', json: buildinfo
-        zip zipFile: filename
-        utils.UploadToNexus(filename,localdisplayName)
-    }
+    sh './gradlew assemble uploadArchives --console=plain --stacktrace'
+    deleteDir()
 }
+
+node {
+    unstash 'everything'
+
+    stage 'Release'
+
+    sh './gradlew release -Prelease.useAutomaticVersion=true -x test'
+    deleteDir()
+}
+
+
+//
+//stage('Upload Artifacts') {
+//    node {
+//
+//
+//
+////        def utils = fileLoader.fromGit('./utils.groovy', 'https://github.com/corelogic/cd-pipeline.git', 'master', '774aeeb5-4206-427f-bdb8-33f22bde0252', '')
+////        def filename = 'jenkins-test-pipeline.zip'
+////        def localdisplayName = env.BUILD_NUMBER + "-" + env.GITHASH.substring(0, 7)
+////        def buildinfo = readJSON text: "{}"
+////
+////
+////        buildinfo['sha'] = env.GITHASH
+////        buildinfo['branch'] = env.BRANCH_NAME
+////        buildinfo['repo'] = env.GITREPONAME
+////        buildinfo['buildnumber'] = localdisplayName
+////        buildinfo['buildurl'] = env.BUILD_URL
+////        unstash 'artifacts'
+////        writeJSON file: 'buildinfo.json', json: buildinfo
+////        zip zipFile: filename
+////        utils.UploadToNexus(filename,localdisplayName)
+//    }
+//}
 
 def setJavaHomeOnPath() {
     env.JAVA_HOME = "${tool 'jdk1.8.0_131'}"

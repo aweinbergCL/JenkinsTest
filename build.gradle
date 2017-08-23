@@ -1,10 +1,12 @@
 
-
-
 buildscript {
     ext {
         springBootVersion = '1.5.4.RELEASE'
         springCloudConnectorsVersion = '1.2.4.RELEASE'
+        gradleReleasePluginVersion = '2.4.0'
+
+        artifactBaseName = 'spring-music-test'
+
     }
 
     repositories {
@@ -14,16 +16,18 @@ buildscript {
     }
 
     dependencies {
+        classpath("net.researchgate:gradle-release:${gradleReleasePluginVersion}")
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
 
 apply plugin: 'java'
-
+apply plugin: 'net.researchgate.release'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 
 apply plugin: 'org.springframework.boot'
+apply plugin: 'maven-publish'
 
 group = 'com.corelogic'
 version = '0.0.1-SNAPSHOT'
@@ -66,7 +70,66 @@ dependencies {
     testCompile "junit:junit"
 }
 
+tasks.withType(Jar) {
+    version = project.version
+    baseName = project.ext.artifactBaseName
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+artifacts {
+    archives sourceJar
+}
+
+assemble.dependsOn(project.tasks.sourceJar)
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+if (project.hasProperty('nexusUrl') &&
+        project.hasProperty('nexusUsername') &&
+        project.hasProperty('nexusPassword')) {
+
+    uploadArchives {
+        outputs.upToDateWhen { false }
+        repositories {
+            mavenDeployer {
+                repository(url: "${nexusUrl}/content/repositories/idc-repo-releases") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+                snapshotRepository(url: "${nexusUrl}/content/repositories/idc-repo-snap") {
+                    authentication(userName: nexusUsername, password: nexusPassword)
+                }
+                pom.name = project.ext.artifactBaseName
+                pom.groupId = project.group
+                pom.version = project.version
+            }
+        }
+    }
+}
+
+
+release {
+    tagTemplate = '$name-$version'
+    preTagCommitMessage = '[Gradle Release Plugin] - Creating commit to set version to:'
+    tagCommitMessage = '[Gradle Release Plugin] - Creating tag for version:'
+    newVersionCommitMessage = '[Gradle Release Plugin] - Creating commit to increase version to:'
+}
+
+afterReleaseBuild.dependsOn uploadArchives
+
+
 jar {
-    baseName = "spring-music"
     version = "" // omit the version from the war file name
 }
