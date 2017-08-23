@@ -111,10 +111,10 @@ if (project.hasProperty('nexusUrl') &&
         outputs.upToDateWhen { false }
         repositories {
             mavenDeployer {
-                repository(url: "${nexusUrl}/content/repositories/idap") {
-                    authentication(userName: nexusUsername, password: nexusPassword)
-                }
-                snapshotRepository(url: "${nexusUrl}/content/repositories/idap") {
+//                repository(url: "${nexusUrl}/content/repositories/idap") {
+//                    authentication(userName: nexusUsername, password: nexusPassword)
+//                }
+                snapshotRepository(url: "${nexusUrl}/content/repositories/idc-repo-snap") {
                     authentication(userName: nexusUsername, password: nexusPassword)
                 }
                 pom.name = project.ext.artifactBaseName
