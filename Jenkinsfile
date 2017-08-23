@@ -144,7 +144,7 @@ stage('Upload Artifacts') {
 }
 
 def setJavaHomeOnPath() {
-    env.JAVA_HOME = "${tool 'Java8'}"
+    env.JAVA_HOME = "${tool 'jdk1.8.0_131'}"
     env.PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
     sh 'java -version'
 }
