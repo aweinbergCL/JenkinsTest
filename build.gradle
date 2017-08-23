@@ -34,7 +34,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'maven-publish'
 apply plugin: 'maven'
 
-group = 'com.corelogic'
+group = 'idap.com.corelogic'
 version = '0.0.1-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -110,10 +110,10 @@ if (project.hasProperty('nexusUrl') &&
         outputs.upToDateWhen { false }
         repositories {
             mavenDeployer {
-                repository(url: "${nexusUrl}/content/repositories/idc-repo-releases") {
+                repository(url: "${nexusUrl}/content/repositories/idap") {
                     authentication(userName: nexusUsername, password: nexusPassword)
                 }
-                snapshotRepository(url: "${nexusUrl}/content/repositories/idc-repo-snap") {
+                snapshotRepository(url: "${nexusUrl}/content/repositories/idap") {
                     authentication(userName: nexusUsername, password: nexusPassword)
                 }
                 pom.name = project.ext.artifactBaseName
