@@ -52,25 +52,25 @@ node {
     stage 'Parallel Testing Steps'
     parallel(failFast: true,
             'js unit tests': {
-                node('linux') {
+                node {
                     // unstash files need to run test
                     sh 'echo js_unit_tests ; sleep 20'
                 }
             },
             'java unit tests': {
-                node('linux') {
+                node {
                     // unstash files need to run test
                     sh "echo java_unit_tests ; sleep 4"
                 }
             },
             'java integration tests': {
-                node('linux') {
+                node {
                     // unstash files need to run test
                     sh "echo java_int_tests ; sleep 15"
                 }
             },
             'e2e tests': {
-                node('linux') {
+                node {
                     // unstash files need to run test
                     sh "echo e2e_tests ; sleep 15"
                 }
@@ -86,7 +86,7 @@ stage('Test Checkpoint') {
 }
 
 stage('Deploy') {
-    node('linux') {
+    node {
         tool name: 'CloudFoundryCLI'
         sh "find ."
         wrap([$class                : 'CloudFoundryCliBuildWrapper',
@@ -101,7 +101,7 @@ stage('Deploy') {
 }
 
 stage('SonarQube') {
-    node('linux') {
+    node {
 
         // checkout code
         checkout scm
@@ -114,7 +114,7 @@ stage('SonarQube') {
 }
 
 stage('Veracode') {
-    node('linux') {
+    node {
         unstash "artifacts"
         withCredentials([usernamePassword(credentialsId: '68a722f2-bcf6-47ef-af1c-727e7f66f856', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
             veracode applicationName: 'ci-pipeline', createProfile: true, createSandbox: true, criticality: 'Medium', sandboxName: "ci", scanName: currentBuild.displayName, teams: '"Build and Release"', uploadIncludesPattern: '**/**.jar', vpassword:  env.PASSWORD, vuser: env.USERNAME
@@ -123,7 +123,7 @@ stage('Veracode') {
 }
 
 stage('Upload Artifacts') {
-    node('linux') {
+    node {
 
         def utils = fileLoader.fromGit('./utils.groovy', 'https://github.com/corelogic/cd-pipeline.git', 'wip-jobtemplate', '774aeeb5-4206-427f-bdb8-33f22bde0252', '')
         def filename = 'ci-pipeline.zip'
