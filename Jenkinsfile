@@ -92,8 +92,8 @@ stage('Test Checkpoint') {
 stage('Upload Artifacts') {
     node {
 
-        this.utils = fileLoader.fromGit('./utils.groovy', 'https://github.com/corelogic/cd-pipeline.git', 'wip-jobtemplate', '774aeeb5-4206-427f-bdb8-33f22bde0252', '')
-        def filename = 'ci-pipeline.zip'
+        @groovy.transform.Field def utils = fileLoader.fromGit('./utils.groovy', 'https://github.com/corelogic/cd-pipeline.git', 'wip-jobtemplate', '774aeeb5-4206-427f-bdb8-33f22bde0252', '')
+        def filename = 'jenkins-test-pipeline.zip'
         def localdisplayName = env.BUILD_NUMBER + "-" + env.GITHASH.substring(0, 7)
         def buildinfo = readJSON text: "{}"
 
