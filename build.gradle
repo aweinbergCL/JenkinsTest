@@ -3,7 +3,7 @@ buildscript {
     ext {
         springBootVersion = '1.5.4.RELEASE'
         springCloudConnectorsVersion = '1.2.4.RELEASE'
-        gradleReleasePluginVersion = '2.4.0'
+        gradleReleasePluginVersion = '2.6.0'
 
         artifactBaseName = 'spring-music-test'
 
@@ -13,6 +13,10 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url "https://repo.spring.io/plugins-release" }
+    }
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.corelogic.net/nexus/content/groups/m2/' }
     }
 
     dependencies {
@@ -28,6 +32,7 @@ apply plugin: 'idea'
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
 group = 'com.corelogic'
 version = '0.0.1-SNAPSHOT'
