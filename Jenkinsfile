@@ -6,7 +6,7 @@ commitRevision = ''
 node('linux') {
     deleteDir()
     properties([[$class  : 'BuildDiscarderProperty',
-                 strategy: [$class: 'LogRotator', numToKeepStr: '30', artifactDaysToKeepStr: '14', artifactNumToKeepStr: '20']]])
+                     strategy: [$class: 'LogRotator', numToKeepStr: '30', artifactDaysToKeepStr: '14', artifactNumToKeepStr: '20']]])
 
     sh 'env | sort'
 

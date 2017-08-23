@@ -20,8 +20,9 @@ buildscript {
     }
 
     dependencies {
-        classpath("net.researchgate:gradle-release:${gradleReleasePluginVersion}")
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("net.researchgate:gradle-release:${gradleReleasePluginVersion}")
+
     }
 }
 
@@ -35,7 +36,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven'
 
 group = 'com.corelogic'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -126,7 +127,6 @@ if (project.hasProperty('nexusUrl') &&
 
 
 release {
-    tagTemplate = '$name-$version'
     preTagCommitMessage = '[Gradle Release Plugin] - Creating commit to set version to:'
     tagCommitMessage = '[Gradle Release Plugin] - Creating tag for version:'
     newVersionCommitMessage = '[Gradle Release Plugin] - Creating commit to increase version to:'
