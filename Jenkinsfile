@@ -85,42 +85,9 @@ stage('Test Checkpoint') {
     }
 }
 
-stage('Deploy') {
-    node {
-        tool name: 'CloudFoundryCLI'
-        sh "find ."
-        wrap([$class                : 'CloudFoundryCliBuildWrapper',
-              apiEndpoint           : 'https://api.preprodapp.cf.corelogic.net',
-              cloudFoundryCliVersion: 'CloudFoundryCLI',
-              credentialsId         : '7cca203b-c77b-4022-9e88-8ff79937c3d5',
-              organization          : 'Corelogic',
-              space                 : 'SA']) {
-            sh "cf apps"
-        }
-    }
-}
 
-stage('SonarQube') {
-    node {
 
-        // checkout code
-        checkout scm
 
-        // run sonarqube analysis
-        withSonarQubeEnv('sonarqube') {
-            sh './gradlew --info sonarqube -Dsonar.verbose=true'
-        }
-    }
-}
-
-stage('Veracode') {
-    node {
-        unstash "artifacts"
-        withCredentials([usernamePassword(credentialsId: '68a722f2-bcf6-47ef-af1c-727e7f66f856', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-            veracode applicationName: 'ci-pipeline', createProfile: true, createSandbox: true, criticality: 'Medium', sandboxName: "ci", scanName: currentBuild.displayName, teams: '"Build and Release"', uploadIncludesPattern: '**/**.jar', vpassword:  env.PASSWORD, vuser: env.USERNAME
-        }
-    }
-}
 
 stage('Upload Artifacts') {
     node {
