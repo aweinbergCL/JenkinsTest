@@ -55,7 +55,7 @@ node('linux') {
 
     stage 'Release'
 
-    sh './gradlew release -Prelease.useAutomaticVersion=false -x test --stacktrace --debug'
+    sh './gradlew release -Prelease.useAutomaticVersion=true -x test --stacktrace --debug'
     deleteDir()
 }
 
