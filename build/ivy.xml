@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
-  <info organisation="com.corelogic" module="JenkinsTest" revision="0.0.2" status="integration" default="true" publication="20170824112821"/>
+  <info organisation="com.corelogic" module="JenkinsTest" revision="0.0.2" status="integration" default="true" publication="20170824114327"/>
   <configurations>
     <conf name="apiElements" visibility="private" extends="compile,runtime"/>
     <conf name="archives" visibility="public"/>
