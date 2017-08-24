@@ -1,1 +1,11 @@
 # Created by .ignore support plugin (hsz.mobi)
+
+build/*
+build
+.gradle
+.idea
+.gradle/buildOutputCleanup/*
+.gradle/3.5.1/taskHistory/taskHistory.lock
+.gradle/buildOutputCleanup/cache.properties
+classes
+.idea/workspace.xml
