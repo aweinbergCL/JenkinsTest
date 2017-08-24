@@ -2,6 +2,6 @@
 
 .idea
 .gradle/buildOutputCleanup/*
-.gradle/3.5.1/taskHistory/*
+
 classes
 .idea/workspace.xml
