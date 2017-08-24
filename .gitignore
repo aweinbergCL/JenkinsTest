@@ -2,7 +2,6 @@
 
 .idea
 .gradle/buildOutputCleanup/*
-.gradle/3.5.1/taskHistory/taskHistory.lock
 .gradle/buildOutputCleanup/cache.properties
 classes
 .idea/workspace.xml
