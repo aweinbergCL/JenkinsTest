@@ -36,7 +36,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'maven'
 
 group = 'com.corelogic'
-version = '0.0.4'
+version = '0.0.5'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8

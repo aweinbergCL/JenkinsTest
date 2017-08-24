@@ -1,7 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 .idea
-.gradle/buildOutputCleanup/*
-
 classes
 .idea/workspace.xml
