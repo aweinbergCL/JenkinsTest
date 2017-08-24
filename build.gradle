@@ -127,6 +127,7 @@ if (project.hasProperty('nexusUrl') &&
 
 
 release {
+    failOnCommitNeeded = false
     preTagCommitMessage = '[Gradle Release Plugin] - Creating commit to set version to:'
     tagCommitMessage = '[Gradle Release Plugin] - Creating tag for version:'
     newVersionCommitMessage = '[Gradle Release Plugin] - Creating commit to increase version to:'
